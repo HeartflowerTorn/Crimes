@@ -1,0 +1,105 @@
+// ==UserScript==
+// @name         Cracking Value Per Nerve
+// @namespace    heartflower.torn.com
+// @version      1.0
+// @description  Displays the value per nerve as well as highlights the one with the highest value
+// @author       You
+// @match        https://www.torn.com/loader.php?sid=crimes*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=torn.com
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    let highestPayoutValue = 0;
+    let highestPayoutElements = [];
+
+    let crimeValues = {
+        'Colleague': { low: 10000, high: 29900 , encryption: 0 },
+        'Ex-boyfriend': { low: 10000, high: 60100 , encryption: 0 },
+        'Ex-girlfriend': { low: 10200, high: 99800 , encryption: 0 },
+        'Ex-husband': { low: 10100, high: 30000 , encryption: 0 },
+        'Ex-wife': { low: 10000, high: 30000 , encryption: 0 },
+        'Friend': { low: 10000, high: 25000 , encryption: 0 },
+        'Informant': { low: 30100, high: 48600 , encryption: 0 },
+        'Juror': { low: 30000, high: 49500 , encryption: 0 },
+        'Neighbour': { low: 10000, high: 25000 , encryption: 0 },
+        'Online adversary': { low: 10000, high: 48000 , encryption: 0 },
+        'Romantic interest': { low: 10000, high: 29500 , encryption: 0 },
+        'Doctor': { low: 35100, high: 139200 , encryption: 0 },
+        'Judge': { low: 41100, high: 96100 , encryption: 0 },
+        'Hacker': { low: 44400, high: 199700 , encryption: 1 },
+        'Police officer': { low: 40700, high: 90000 , encryption: 1 },
+        'Government official': { low: 70300, high: 129500 , encryption: 1 },
+        'Politician': { low: 60000, high: 115000 , encryption: 1 },
+        'Pornography network': { low: 72300, high: 145400 , encryption: 1 },
+        'Campus network': { low: 61000, high: 171300 , encryption: 1 },
+        'Health service': { low: 86500, high: 148100 , encryption: 1 },
+        'Games developer': { low: 69800, high: 132900 , encryption: 2 },
+        'Rival corporation': { low: 88600, high: 199600 , encryption: 2 },
+        'Police department': { low: 101000, high: 243100 , encryption: 3 },
+        'Crime syndicate': { low: 117000, high: 342400 , encryption: 3 },
+        'Government': { low: 190500, high: 297500 , encryption: 3 },
+        'Internet service provider': { low: 199900, high: 266800 , encryption: 3 },
+        'Armed forces': { low: 410600, high: 530800 , encryption: 9 },
+        'Intelligence agency': { low: 460000, high: 880600 , encryption: 9 },
+    };
+
+    function doSomething() {
+        let contentWrapper = document.querySelector('.content-wrapper');
+        if (contentWrapper) {
+            let rigStatusElement = document.querySelector('.rigStatus___PyA3T');
+            let bruteForceStrengthElement = rigStatusElement.querySelector('.strength___DM3lW');
+            let bruteForceStrength = bruteForceStrengthElement.querySelector('.value___FmWPr').textContent;
+
+            let crimeHeader = document.querySelector('.heading___dOsMq');
+            let crimeName = crimeHeader.textContent;
+
+            if (crimeName == 'Cracking') {
+                let crimeOptionElements = document.querySelectorAll('.crime-option');
+                crimeOptionElements.forEach(crimeOptionElement => {
+                    let targetElement = crimeOptionElement.querySelector('.targetSection___F_nB4');
+                    let crimeTypeElement = targetElement.querySelector('.type___T9oMA');
+                    let crimeType = crimeTypeElement.textContent;
+                    console.log('Crime Type: ' + crimeType);
+
+                    let passwordLength = crimeOptionElement.querySelectorAll('.charSlot___b_S9h').length;
+
+                    if (crimeValues.hasOwnProperty(crimeType)) {
+                        let lowReward = crimeValues[crimeType].low;
+                        let highReward = crimeValues[crimeType].high;
+                        let averageReward = (lowReward + highReward) / 2;
+                        let encryption = crimeValues[crimeType].encryption;
+                        let tries = Math.ceil((passwordLength * (encryption + 1)) / bruteForceStrength);
+                        let payoutPerNerve = averageReward / ((7 * tries) + 5);
+                        let formattedPayoutPerNerve = '$' + Math.round(payoutPerNerve).toLocaleString('en-US');
+
+                        let payoutDiv = document.createElement('div');
+                        payoutDiv.id = 'payoutPerNerve';
+                        payoutDiv.textContent = formattedPayoutPerNerve;
+                        payoutDiv.style.display = 'flex';
+                        payoutDiv.style.flex = '1';
+                        payoutDiv.style.justifyContent = 'right';
+
+                        targetElement.appendChild(payoutDiv);
+
+                        // Update highest payout
+                        if (payoutPerNerve > highestPayoutValue) {
+                            highestPayoutValue = payoutPerNerve;
+                            highestPayoutElements = [crimeOptionElement];
+                        } else if (payoutPerNerve === highestPayoutValue) {
+                            highestPayoutElements.push(crimeOptionElement);
+                        }
+                    }
+                });
+
+                // Highlight the crime options with the highest payout
+                highestPayoutElements.forEach(element => {
+                    element.style.background = 'linear-gradient(180deg, rgba(108, 173, 43, 0.5), rgba(77, 124, 30, 0.5))';
+                });
+            }
+        }
+    }
+
+    setTimeout(doSomething, 500);
+})();
