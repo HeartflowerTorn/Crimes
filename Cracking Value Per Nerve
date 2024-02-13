@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      1.3
+// @version      1.3.1
 // @description  Displays the value per nerve as well as highlights the one with the highest value
 // @author       You
 // @match        https://www.torn.com/*
@@ -49,9 +49,7 @@
         let contentWrapper = document.querySelector('.content-wrapper');
         if (contentWrapper) {
             let rigStatusElement = document.querySelector('.rigStatus___PyA3T');
-            console.log(rigStatusElement);
             let bruteForceStrengthElement = rigStatusElement.querySelector('.strength___DM3lW');
-            console.log(bruteForceStrengthElement);
             let bruteForceStrength = bruteForceStrengthElement.querySelector('.value___FmWPr').textContent;
 
             let crimeHeader = document.querySelector('.heading___dOsMq');
@@ -63,25 +61,18 @@
                     let targetElement = crimeOptionElement.querySelector('.targetSection___F_nB4');
                     let crimeTypeElement = targetElement.querySelector('.type___T9oMA');
                     let crimeType = crimeTypeElement.textContent;
-                    console.log(crimeType);
 
                     let passwordLength = crimeOptionElement.querySelectorAll('.charSlot___b_S9h').length;
-                    console.log(passwordLength);
 
                     if (crimeValues.hasOwnProperty(crimeType)) {
                         let lowReward = crimeValues[crimeType].low;
-                        console.log(lowReward);
                         let highReward = crimeValues[crimeType].high;
                         let averageReward = (lowReward + highReward) / 2;
-                        console.log('Avg reward: ' + averageReward);
                         let encryption = crimeValues[crimeType].encryption;
-                        console.log(encryption);
                         let tries = Math.ceil((passwordLength * (encryption + 1)) / bruteForceStrength);
-                        console.log(tries);
                         let payoutPerNerve = averageReward / ((7 * tries) + 5);
                         let formattedPayoutPerNerve = '$' + Math.round(payoutPerNerve).toLocaleString('en-US');
-                        console.log(formattedPayoutPerNerve);
-
+                        
                         let payoutDiv = document.createElement('div');
                         payoutDiv.id = 'payoutPerNerve';
                         payoutDiv.textContent = formattedPayoutPerNerve;
