@@ -23,7 +23,7 @@
         'Friend': { low: 10000, high: 25000, encryption: 0 },
         'Informant': { low: 30100, high: 48600, encryption: 0 },
         'Juror': { low: 30000, high: 49500, encryption: 0 },
-        'Neighbour': { low: 10000, high: 25000, encryption: 0 },
+        'Neighbor': { low: 10000, high: 25000, encryption: 0 },
         'Online adversary': { low: 10000, high: 48000, encryption: 0 },
         'Romantic interest': { low: 10000, high: 29500, encryption: 0 },
         'Doctor': { low: 35100, high: 139200, encryption: 0 },
