@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      1.3.1
+// @version      2.0
 // @description  Displays the value per nerve as well as highlights the one with the highest value
-// @author       You
+// @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=torn.com
 // ==/UserScript==
@@ -14,35 +14,205 @@
     let highestPayoutValue = 0;
     let highestPayoutElements = [];
 
-    let crimeValues = {
-        'Colleague': { low: 10000, high: 29900, encryption: 0 },
-        'Ex-boyfriend': { low: 10000, high: 60100, encryption: 0 },
-        'Ex-girlfriend': { low: 10200, high: 99800, encryption: 0 },
-        'Ex-husband': { low: 10100, high: 30000, encryption: 0 },
-        'Ex-wife': { low: 10000, high: 30000, encryption: 0 },
-        'Friend': { low: 10000, high: 25000, encryption: 0 },
-        'Informant': { low: 30100, high: 48600, encryption: 0 },
-        'Juror': { low: 30000, high: 49500, encryption: 0 },
-        'Neighbor': { low: 10000, high: 25000, encryption: 0 },
-        'Online adversary': { low: 10000, high: 48000, encryption: 0 },
-        'Romantic interest': { low: 10000, high: 29500, encryption: 0 },
-        'Doctor': { low: 35100, high: 139200, encryption: 0 },
-        'Judge': { low: 41100, high: 96100, encryption: 0 },
-        'Hacker': { low: 44400, high: 199700, encryption: 1 },
-        'Police officer': { low: 40700, high: 90000, encryption: 1 },
-        'Government official': { low: 70300, high: 129500, encryption: 1 },
-        'Politician': { low: 60000, high: 115000, encryption: 1 },
-        'Pornography network': { low: 72300, high: 145400, encryption: 1 },
-        'Campus network': { low: 61000, high: 171300, encryption: 1 },
-        'Health service': { low: 86500, high: 148100, encryption: 1 },
-        'Games developer': { low: 69800, high: 132900, encryption: 2 },
-        'Rival corporation': { low: 88600, high: 199600, encryption: 2 },
-        'Police department': { low: 101000, high: 243100, encryption: 3 },
-        'Crime syndicate': { low: 117000, high: 342400, encryption: 3 },
-        'Government': { low: 190500, high: 297500, encryption: 3 },
-        'Internet service provider': { low: 199900, high: 266800, encryption: 3 },
-        'Armed forces': { low: 410600, high: 530800, encryption: 9 },
-        'Intelligence agency': { low: 460000, high: 880600, encryption: 9 },
+    let detailed = true;
+
+    let crimeValues = {};
+
+    if (detailed == false) {
+        crimeValues = {
+            'Colleague': { low: 10000, high: 29900, encryption: 0 },
+            'Ex-boyfriend': { low: 10000, high: 60100, encryption: 0 },
+            'Ex-girlfriend': { low: 10200, high: 99800, encryption: 0 },
+            'Ex-husband': { low: 10100, high: 30000, encryption: 0 },
+            'Ex-wife': { low: 10000, high: 30000, encryption: 0 },
+            'Friend': { low: 10000, high: 25000, encryption: 0 },
+            'Informant': { low: 30100, high: 48600, encryption: 0 },
+            'Juror': { low: 30000, high: 49500, encryption: 0 },
+            'Neighbor': { low: 10000, high: 25000, encryption: 0 },
+            'Online adversary': { low: 10000, high: 48000, encryption: 0 },
+            'Romantic interest': { low: 10000, high: 29500, encryption: 0 },
+            'Doctor': { low: 35100, high: 139200, encryption: 0 },
+            'Judge': { low: 41100, high: 96100, encryption: 0 },
+            'Hacker': { low: 44400, high: 199700, encryption: 1 },
+            'Police officer': { low: 40700, high: 90000, encryption: 1 },
+            'Government official': { low: 70300, high: 129500, encryption: 1 },
+            'Politician': { low: 60000, high: 115000, encryption: 1 },
+            'Pornography network': { low: 72300, high: 145400, encryption: 1 },
+            'Campus network': { low: 61000, high: 171300, encryption: 1 },
+            'Health service': { low: 86500, high: 148100, encryption: 1 },
+            'Games developer': { low: 69800, high: 132900, encryption: 2 },
+            'Rival corporation': { low: 88600, high: 199600, encryption: 2 },
+            'Police department': { low: 101000, high: 243100, encryption: 3 },
+            'Crime syndicate': { low: 117000, high: 342400, encryption: 3 },
+            'Government': { low: 190500, high: 297500, encryption: 3 },
+            'Internet service provider': { low: 199900, high: 266800, encryption: 3 },
+            'Armed forces': { low: 410600, high: 530800, encryption: 9 },
+            'Intelligence agency': { low: 460000, high: 880600, encryption: 9 },
+        };
+    } else if (detailed == true) {
+        crimeValues = {
+            'Military personnel records': {low: 410200, high: 463300, average: 444467, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Reconnaissance archive': {low: 507900, high: 518600, average: 513250, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Contractor supply database': {low: 514400, high: 571200, average: 551780, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Mission report log': {low: 482600, high: 517800, average: 495700, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 9},
+            'Network superadmin authentication': {low: 132400, high: 171300, average: 152124, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 1},
+            'Student grade records': {low: 70000, high: 89700, average: 80179, bruteForceSuccessRate: 98, crackingSuccessRate: 98, encryption: 1},
+            'Student loan ledger': {low: 101000, high: 129700, average: 114466, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 1},
+            'Student personal records': {low: 62900, high: 73200, average: 68940, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 1},
+            'Enrollment documentation archive': {low: 18200, high: 78900, average: 68023, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 1},
+            'Personal website': {low: 15400, high: 24800, average: 20001, bruteForceSuccessRate: 94, crackingSuccessRate: 97, encryption: 0},
+            'Portfolio website': {low: 11400, high: 25000, average: 20128, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Work email account': {low: 20000, high: 29900, average: 25100, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Fantasy sports account': {low: 10000, high: 19700, average: 14853, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Cryptocurrency exchange': {low: 20100, high: 29400, average: 25113, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Cloud storage bucket': {low: 15600, high: 25000, average: 20220, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Business communications platform': {low: 15100, high: 24800, average: 20100, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Encrypted file sharing platform': {low: 117000, high: 122900, average: 119950, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Encrypted target list': {low: 143400, high: 169500, average: 155814, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Slush fund account': {low: 251200, high: 342400, average: 296088, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
+            'Foreign exchange account': {low: 220100, high: 285800, average: 244467, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Secure communications channel': {low: 137800, high: 227800, average: 186058, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 3},
+            'Sensitive financial ledger': {low: 120300, high: 182100, average: 148025, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 3},
+            'Mortuary records': {low: 102000, high: 139200, average: 120931, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Prescription generating software': {low: 35100, high: 176300, average: 45967, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Patient database': {low: 55800, high: 79900, average: 71223, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Offshore investment account': {low: 20000, high: 29800, average: 25308, bruteForceSuccessRate: 95, crackingSuccessRate: 97, encryption: 0},
+            'Online auction account': {low: 20200, high: 60100, average: 25378, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 0},
+            'Social network profile': {low: 10000, high: 19600, average: 15067, bruteForceSuccessRate: 99, crackingSuccessRate: 98, encryption: 0},
+            'Dating site': {low: 10600, high: 24600, average: 15389, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Online bank account': {low: 20100, high: 29300, average: 24879, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Online gambling account': {low: 10000, high: 19500, average: 15236, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Political party hub': {low: 20000, high: 30000, average: 24736, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Fitness tracker': {low: 10200, high: 19800, average: 15381, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Clothing store account': {low: 20000, high: 29200, average: 24315, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 0},
+            'Game streaming account': {low: 10700, high: 20000, average: 14953, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Music streaming service': {low: 11200, high: 19900, average: 16058, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 0},
+            'Home router access': {low: 20200, high: 29300, average: 24165, bruteForceSuccessRate: 96, crackingSuccessRate: 97, encryption: 0},
+            'Cryptocurrency exchange': {low: 20100, high: 29900, average: 25578, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Stock trading platform': {low: 20000, high: 30000, average: 24535, bruteForceSuccessRate: 98, crackingSuccessRate: 98, encryption: 0},
+            'Escort service website': {low: 15100, high: 25000, average: 19590, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 0},
+            'Personal email account': {low: 10100, high: 19800, average: 15804, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Online pharmacy account': {low: 10000, high: 19900, average: 15015, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Porn site': {low: 15000, high: 29200, average: 19858, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Personal blog': {low: 10000, high: 27200, average: 14924, bruteForceSuccessRate: 98, crackingSuccessRate: 98, encryption: 0},
+            'Work email account': {low: 15000, high: 29400, average: 19987, bruteForceSuccessRate: 97, crackingSuccessRate: 98, encryption: 0},
+            'Online payment service': {low: 20100, high: 30000, average: 25690, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Online therapy account': {low: 10100, high: 19900, average: 14768, bruteForceSuccessRate: 89, crackingSuccessRate: 100, encryption: 0},
+            'Legal advice portal': {low: 27000, high: 27000, average: 27000, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Video calling app': {low: 15000, high: 25000, average: 20360, bruteForceSuccessRate: 98, crackingSuccessRate: 99, encryption: 0},
+            'Video game storefront': {low: 11600, high: 25000, average: 20069, bruteForceSuccessRate: 95, crackingSuccessRate: 99, encryption: 0},
+            'Takeout delivery app': {low: 10000, high: 20000, average: 15339, bruteForceSuccessRate: 97, crackingSuccessRate: 99, encryption: 0},
+            'Instant messenger': {low: 15300, high: 23700, average: 18923, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Online forum account': {low: 10200, high: 72900, average: 15870, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'MMORPG Account': {low: 15100, high: 24500, average: 19867, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Payment processing portal': {low: 120400, high: 143600, average: 131367, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 2},
+            'Reward code directory': {low: 80100, high: 115200, average: 99394, bruteForceSuccessRate: 99, crackingSuccessRate: 95, encryption: 2},
+            'Pre-release media bucket': {low: 91600, high: 296300, average: 119073, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 2},
+            'Forum administrator access': {low: 71400, high: 100000, average: 89723, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 2},
+            'Version control system': {low: 60900, high: 121300, average: 71866, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 2},
+            'Source code repository': {low: 81600, high: 117300, average: 98848, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 2},
+            'Birth records': {low: 184000, high: 224300, average: 202610, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
+            'Secure data-sharing portal': {low: 209300, high: 286800, average: 255746, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 3},
+            'Political donations ledger': {low: 204400, high: 263100, average: 240117, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 3},
+            'Immigration records': {low: 152000, high: 194500, average: 176539, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
+            'Import / export records': {low: 160700, high: 247500, average: 202355, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
+            'Voting records': {low: 208100, high: 246200, average: 228600, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
+            'Witness protection directory': {low: 368200, high: 477500, average: 432057, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Crime statistics database': {low: 230800, high: 230800, average: 230800, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Home printer cache': {low: 100500, high: 129500, average: 114565, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 1},
+            'Private email account': {low: 70300, high: 89500, average: 79921, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Online filing system': {low: 66900, high: 100000, average: 90400, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 1},
+            'Document storage platform': {low: 80800, high: 115500, average: 100100, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Dark web storefront': {low: 41500, high: 199700, average: 148442, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Botnet command module': {low: 70200, high: 99500, average: 86567, bruteForceSuccessRate: 96, crackingSuccessRate: 98, encryption: 1},
+            'Gore website': {low: 50100, high: 157400, average: 61641, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'VPN provider authentication': {low: 85400, high: 139300, average: 115404, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Proxy server access': {low: 50900, high: 75100, average: 59372, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Software development hub': {low: 61500, high: 149900, average: 127400, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 1},
+            'Stolen password repository': {low: 50800, high: 69500, average: 59239, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Stolen credit card repository': {low: 84600, high: 119900, average: 99722, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Cryptocurrency mining cluster': {low: 93700, high: 149100, average: 124467, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Medical records database': {low: 113400, high: 148100, average: 133328, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 1},
+            'Coroner post-mortem records': {low: 101300, high: 149200, average: 128232, bruteForceSuccessRate: 98, crackingSuccessRate: 97, encryption: 1},
+            'Patient directory': {low: 89400, high: 129800, average: 118714, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 1},
+            'Malpractice reports archive': {low: 80100, high: 151700, average: 90915, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Online bank account': {low: 40100, high: 49600, average: 44955, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Personal email account': {low: 30300, high: 126200, average: 36558, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 0},
+            'High school records': {low: 11900, high: 45000, average: 39762, bruteForceSuccessRate: 99, crackingSuccessRate: 98, encryption: 0},
+            'Home network access': {low: 30100, high: 39800, average: 35716, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 0},
+            'Dental records': {low: 30700, high: 39600, average: 33670, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Cellphone call history': {low: 38000, high: 44600, average: 41056, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Cell phone record database': {low: 561700, high: 561700, average: 561700, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 9},
+            'Primary access terminal': {low: 727400, high: 727400, average: 727400, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Level 3 security authentication': {low: 500100, high: 577100, average: 526367, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 9},
+            'Security mainframe': {low: 547400, high: 547400, average: 547400, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Terrorist watch list': {low: 557100, high: 595000, average: 576033, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Primary load balancer': {low: 456800, high: 456800, average: 456800, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 9},
+            'Encrypted communication channel': {low: 661000, high: 751300, average: 705475, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 9},
+            'Foreign intelligence records': {low: 516800, high: 516800, average: 516800, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 9},
+            'VRF router': {low: 266800, high: 266800, average: 266800, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Load balancing controller': {low: 190300, high: 233800, average: 211150, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Stacked network switch': {low: 206600, high: 249900, average: 228980, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
+            'Cookie log': {low: 199900, high: 199900, average: 199900, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Cross connect ingress': {low: 204300, high: 216400, average: 210350, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Multi cluster ingress': {low: 230100, high: 258800, average: 241367, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 3},
+            'Personal email account': {low: 60100, high: 100000, average: 79287, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Secure filing system': {low: 47500, high: 91400, average: 59925, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Court docket library': {low: 42800, high: 79200, average: 65545, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Criminal records archive': {low: 50200, high: 86700, average: 64231, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Sentencing history database': {low: 41100, high: 59200, average: 51550, bruteForceSuccessRate: 91, crackingSuccessRate: 91, encryption: 0},
+            'Online photo collection': {low: 24100, high: 40000, average: 34680, bruteForceSuccessRate: 93, crackingSuccessRate: 98, encryption: 0},
+            'Community Q&A site': {low: 30200, high: 139000, average: 37234, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Mental health records': {low: 40100, high: 50000, average: 45320, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Work disciplinary records': {low: 30300, high: 40000, average: 35124, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Home security system': {low: 12400, high: 44400, average: 39300, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 0},
+            'Webcam network access': {low: 40300, high: 49900, average: 44759, bruteForceSuccessRate: 92, crackingSuccessRate: 100, encryption: 0},
+            'Nanny-cam access': {low: 15200, high: 27800, average: 20440, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Home wi-fi network': {low: 10200, high: 20000, average: 14692, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 0},
+            'Smart pet feeder': {low: 11000, high: 19900, average: 14980, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 0},
+            'Smart heating controls': {low: 10000, high: 57000, average: 16084, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'HOA records': {low: 10500, high: 20000, average: 16022, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 0},
+            'Home security system': {low: 15200, high: 24800, average: 20381, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Remote PC access': {low: 20600, high: 48000, average: 25097, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Image board account': {low: 15000, high: 37300, average: 20914, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Search engine history': {low: 10000, high: 20000, average: 15127, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Online RPG account': {low: 15100, high: 45300, average: 21119, bruteForceSuccessRate: 94, crackingSuccessRate: 98, encryption: 0},
+            'Warrant database': {low: 150200, high: 196300, average: 178442, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
+            'DNA database': {low: 210500, high: 242200, average: 225400, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Arrest records': {low: 126400, high: 172400, average: 149943, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'People of interest list': {low: 182300, high: 213800, average: 199673, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'Surveillance records': {low: 130600, high: 173000, average: 152246, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Surveillance network access': {low: 201700, high: 249400, average: 226838, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Vacated properties register': {low: 153900, high: 199300, average: 172556, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Officer training records': {low: 101000, high: 149900, average: 128600, bruteForceSuccessRate: 100, crackingSuccessRate: 91, encryption: 0},
+            'Bodycam footage repository': {low: 151400, high: 185200, average: 171700, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Drug test results': {low: 70000, high: 90000, average: 79667, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 1},
+            'Training records': {low: 42700, high: 67400, average: 52293, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 1},
+            'Mental health records': {low: 40500, high: 59400, average: 50630, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 1},
+            'Personal email account': {low: 50200, high: 71700, average: 56922, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Offshore tax account': {low: 63600, high: 119900, average: 106710, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Private email account': {low: 60000, high: 79400, average: 69319, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Union membership forum': {low: 60400, high: 80600, average: 70578, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 1},
+            'Voicemail account': {low: 60700, high: 88400, average: 70900, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 1},
+            'Lobbying minutes archive': {low: 81200, high: 104600, average: 92747, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Credit card records': {low: 101200, high: 145400, average: 125003, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 1},
+            'Video comments log': {low: 63400, high: 117600, average: 97327, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
+            'Master password': {low: 72300, high: 139000, average: 116096, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 1},
+            'Patent filing catalog': {low: 105300, high: 149500, average: 123923, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 2},
+            'Digital storage platform': {low: 80000, high: 119400, average: 97521, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 0},
+            'API gateway': {low: 101400, high: 129200, average: 119467, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Sales ledger': {low: 120300, high: 157600, average: 142995, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 0},
+            'Business communications platform': {low: 111800, high: 128800, average: 120717, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Research & development databank': {low: 92500, high: 120000, average: 103678, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Corporate bank account': {low: 160500, high: 238600, average: 198618, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Client directory': {low: 148900, high: 166500, average: 159743, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Social media account': {low: 17500, high: 30000, average: 24822, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'Cellphone provider': {low: 10000, high: 19800, average: 15117, bruteForceSuccessRate: 96, crackingSuccessRate: 99, encryption: 0},
+            'Calendar app': {low: 10100, high: 20000, average: 15012, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
+            'Cloud storage bucket': {low: 15000, high: 25000, average: 20346, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'University network authentication': {low: 15000, high: 25000, average: 20258, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
+            'Online wishlist': {low: 16700, high: 29500, average: 24859, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+        }
     };
 
     function fetchHighestPayout() {
@@ -56,10 +226,26 @@
             let crimeName = crimeHeader.textContent;
 
             if (crimeName == 'Cracking') {
+                let previousPayoutDivs = document.querySelectorAll('#payoutPerNerve');
+
+                if (previousPayoutDivs) {
+                    previousPayoutDivs.forEach(element => {
+                        element.remove();
+                    });
+                }
+
                 let crimeOptionElements = document.querySelectorAll('.crime-option');
                 crimeOptionElements.forEach(crimeOptionElement => {
                     let targetElement = crimeOptionElement.querySelector('.targetSection___F_nB4');
-                    let crimeTypeElement = targetElement.querySelector('.type___T9oMA');
+
+                    let crimeTypeElement = '';
+
+                    if (detailed == false) {
+                        crimeTypeElement = targetElement.querySelector('.type___T9oMA');
+                    } else if (detailed == true) {
+                        crimeTypeElement = targetElement.querySelector('.service___uYhDL');
+                    }
+
                     let crimeType = crimeTypeElement.textContent;
 
                     let passwordLength = crimeOptionElement.querySelectorAll('.charSlot___b_S9h').length;
@@ -67,12 +253,33 @@
                     if (crimeValues.hasOwnProperty(crimeType)) {
                         let lowReward = crimeValues[crimeType].low;
                         let highReward = crimeValues[crimeType].high;
-                        let averageReward = (lowReward + highReward) / 2;
+
+                        let averageReward = '';
+
+                        if (detailed == false) {
+                            averageReward = (lowReward + highReward) / 2;
+                        } else if (detailed == true) {
+                            averageReward = crimeValues[crimeType].average;
+                        }
+
                         let encryption = crimeValues[crimeType].encryption;
-                        let tries = Math.ceil((passwordLength * (encryption + 1)) / bruteForceStrength);
-                        let payoutPerNerve = averageReward / ((7 * tries) + 5);
+
+                        let payoutPerNerve = '';
+                        let tries = '';
+
+                        if (detailed == false) {
+                            tries = Math.ceil((passwordLength * (encryption + 1)) / bruteForceStrength);
+                            payoutPerNerve = averageReward / ((7 * tries) + 5);
+                        } else if (detailed == true) {
+                            let bruteForceSuccessRate = (crimeValues[crimeType].bruteForceSuccessRate / 100) || 1;
+                            let crackingSuccessRate = (crimeValues[crimeType].crackingSuccessRate / 100) || 1;
+                            tries = (passwordLength * (encryption + 1)) / (bruteForceStrength * bruteForceSuccessRate);
+                            let totalNerve = (7 * tries + 5) / crackingSuccessRate;
+                            payoutPerNerve = averageReward / totalNerve;
+                        }
+
                         let formattedPayoutPerNerve = '$' + Math.round(payoutPerNerve).toLocaleString('en-US');
-                        
+
                         let payoutDiv = document.createElement('div');
                         payoutDiv.id = 'payoutPerNerve';
                         payoutDiv.textContent = formattedPayoutPerNerve;
@@ -100,17 +307,11 @@
         }
     }
 
-    let previousHref = window.location.href;
-
     function checkUrl() {
-        if (window.location.href !== previousHref) {
-            previousHref = window.location.href;
-            if (window.location.href.includes('crimes')) {
-                setTimeout(fetchHighestPayout, 200);
-            }
+        if (window.location.href.includes('crimes')) {
+            fetchHighestPayout();
         }
     }
 
-    setInterval(checkUrl, 100);
-    setTimeout(fetchHighestPayout, 200);
+    setInterval(checkUrl, 200);
 })();
