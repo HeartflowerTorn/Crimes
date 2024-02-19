@@ -1,0 +1,225 @@
+// ==UserScript==
+// @name         Disposal Value Per Nerve
+// @namespace    heartflower.torn.com
+// @version      1.0
+// @description  Displays the value per nerve for each disposal as well as highlights the best one.
+// @author       Heartflower [2626587]
+// @match        https://www.torn.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=torn.com
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    let crimeData = [
+        { name: 'Biological Waste', method: 'Abandon', averageMoney: 28012, successRate: 0.74, nerveAmount: 6 },
+        { name: 'Biological Waste', method: 'Bury', averageMoney: 28201, successRate: 0.8, nerveAmount: 8 },
+        { name: 'Biological Waste', method: 'Burn', averageMoney: 29061, successRate: 0.68, nerveAmount: 10 },
+        { name: 'Biological Waste', method: 'Sink', averageMoney: 28477, successRate: 0.98, nerveAmount: 12 },
+
+        { name: 'Body Part', method: 'Abandon', averageMoney: 72044, successRate: 0.74, nerveAmount: 6 },
+        { name: 'Body Part', method: 'Bury', averageMoney: 71673, successRate: 0.76, nerveAmount: 8 },
+        { name: 'Body Part', method: 'Burn', averageMoney: 70850, successRate: 0.91, nerveAmount: 10 },
+        { name: 'Body Part', method: 'Sink', averageMoney: 70913, successRate: 0.91, nerveAmount: 12 },
+        { name: 'Body Part', method: 'Dissolve', averageMoney: 70543, successRate: 0.98, nerveAmount: 14 },
+
+        { name: 'Building Debris', method: 'Abandon', averageMoney: 8923, successRate: 0.84, nerveAmount: 6 },
+        { name: 'Building Debris', method: 'Bury', averageMoney: 8860, successRate: 0.7, nerveAmount: 8 },
+        { name: 'Building Debris', method: 'Sink', averageMoney: 8990, successRate: 0.97, nerveAmount: 12 },
+
+        { name: 'Dead Body', method: 'Abandon', averageMoney: 140755, successRate: 0.81, nerveAmount: 6 },
+        { name: 'Dead Body', method: 'Bury', averageMoney: 130663, successRate: 1, nerveAmount: 8 },
+        { name: 'Dead Body', method: 'Burn', averageMoney: 150350, successRate: 0.5, nerveAmount: 10 },
+        { name: 'Dead Body', method: 'Sink', averageMoney: 0, successRate: 0, nerveAmount: 12 },
+        { name: 'Dead Body', method: 'Dissolve', averageMoney: 137550, successRate: 1, nerveAmount: 14 },
+
+        { name: 'Documents', method: 'Abandon', averageMoney: 10118, successRate: 0.67, nerveAmount: 6 },
+        { name: 'Documents', method: 'Bury', averageMoney: 9957, successRate: 0.82, nerveAmount: 8 },
+        { name: 'Documents', method: 'Burn', averageMoney: 9973, successRate: 0.98, nerveAmount: 10 },
+        { name: 'Documents', method: 'Sink', averageMoney: 0, successRate: 0, nerveAmount: 12 },
+        { name: 'Documents', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'Firearm', method: 'Abandon', averageMoney: 38433, successRate: 0.72, nerveAmount: 6 },
+        { name: 'Firearm', method: 'Bury', averageMoney: 37241, successRate: 0.86, nerveAmount: 8 },
+        { name: 'Firearm', method: 'Sink', averageMoney: 38222, successRate: 0.98, nerveAmount: 12 },
+        { name: 'Firearm', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'General Waste', method: 'Abandon', averageMoney: 2017, successRate: 0.83, nerveAmount: 6 },
+        { name: 'General Waste', method: 'Bury', averageMoney: 2066, successRate: 0.97, nerveAmount: 8 },
+        { name: 'General Waste', method: 'Burn', averageMoney: 1994, successRate: 0.96, nerveAmount: 10 },
+        { name: 'General Waste', method: 'Sink', averageMoney: 2000, successRate: 0.71, nerveAmount: 12 },
+        { name: 'General Waste', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'Industrial Waste', method: 'Abandon', averageMoney: 24077, successRate: 0.72, nerveAmount: 6 },
+        { name: 'Industrial Waste', method: 'Bury', averageMoney: 24375, successRate: 0.83, nerveAmount: 8 },
+        { name: 'Industrial Waste', method: 'Sink', averageMoney: 24067, successRate: 0.97, nerveAmount: 12 },
+
+        { name: 'Murder Weapon', method: 'Abandon', averageMoney: 19078, successRate: 0.75, nerveAmount: 6 },
+        { name: 'Murder Weapon', method: 'Bury', averageMoney: 38912, successRate: 0.86, nerveAmount: 8 },
+        { name: 'Murder Weapon', method: 'Sink', averageMoney: 37359, successRate: 0.98, nerveAmount: 12 },
+        { name: 'Murder Weapon', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'Old Furniture', method: 'Abandon', averageMoney: 2976, successRate: 0.83, nerveAmount: 6 },
+        { name: 'Old Furniture', method: 'Bury', averageMoney: 2961, successRate: 0.68, nerveAmount: 8 },
+        { name: 'Old Furniture', method: 'Burn', averageMoney: 2993, successRate: 0.97, nerveAmount: 10 },
+        { name: 'Old Furniture', method: 'Sink', averageMoney: 2970, successRate: 0.85, nerveAmount: 12 },
+        { name: 'Old Furniture', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'Broken Appliance', method: 'Abandon', averageMoney: 4535, successRate: 0.93, nerveAmount: 6 },
+        { name: 'Broken Appliance', method: 'Bury', averageMoney: 4557, successRate: 0.81, nerveAmount: 8 },
+        { name: 'Broken Appliance', method: 'Sink', averageMoney: 4469, successRate: 0.97, nerveAmount: 12 },
+        { name: 'Broken Appliance', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+
+        { name: 'Vehicle', method: 'Abandon', averageMoney: 15070, successRate: 0.82, nerveAmount: 6 },
+        { name: 'Vehicle', method: 'Burn', averageMoney: 14994, successRate: 0.96, nerveAmount: 10 },
+        { name: 'Vehicle', method: 'Sink', averageMoney: 15017, successRate: 0.98, nerveAmount: 12 },
+    ];
+
+    function fetchDisposals() {
+        let highestPayoutElements = [];
+        let bestPayoutPerNerve = 0;
+
+        let contentWrapper = document.querySelector('.content-wrapper');
+        if (contentWrapper) {
+
+            let crimeHeader = document.querySelector('.heading___dOsMq');
+            let crimeName = crimeHeader.textContent;
+
+            // Only proceed if on the Disposal page
+            if (crimeName == 'Disposal') {
+                let crimeOptionElements = document.querySelectorAll('.crime-option');
+
+                let existingPayoutElements = document.querySelectorAll('#hf-disposal-payout');
+
+                // If there's already payout divs, remove them first
+                if (existingPayoutElements) {
+                    existingPayoutElements.forEach(existingPayoutElement => {
+                        existingPayoutElement.remove();
+                    });
+                }
+
+                // Loop through each Disposal crime
+                crimeOptionElements.forEach(crimeOptionElement => {
+                    // Log the name
+                    let crimeTitleElement = crimeOptionElement.querySelector('.crimeOptionSection___hslpu');
+                    let crimeTitle = crimeTitleElement.textContent.trim();
+
+                    // Check if any method button is selected
+                    let methodButtons = crimeOptionElement.querySelectorAll('.methodButton___lCgpf');
+
+                    // Create the payout div
+                    let payoutElement = document.createElement('div');
+                    payoutElement.id = 'hf-disposal-payout';
+                    payoutElement.style.display = 'flex';
+                    payoutElement.style.flex = '1';
+                    payoutElement.style.flexDirection = 'column';
+                    payoutElement.style.alignItems = 'flex-end';
+                    payoutElement.style.color = 'var(--default-base-grey1-color)';
+                    crimeTitleElement.appendChild(payoutElement);
+
+                    // Create the paragraph for the amount
+                    let payoutParagraph = document.createElement('p');
+                    payoutParagraph.id = 'hf-disposal-payout-amount';
+                    payoutParagraph.textContent = 'Unknown';
+                    payoutElement.appendChild(payoutParagraph);
+
+                    let selectedButton = false;
+                    let moneyPerNerve = '';
+
+                    // Go through every button and see if they're selected or not
+                    methodButtons.forEach(button => {
+                        if (button.classList.contains('selected___TKH3R')) {
+                            let methodName = button.getAttribute('aria-label');
+
+                            let selectedData = crimeData.find(data => data.name === crimeTitle && data.method === methodName);
+
+                            if (selectedData) {
+                                selectedButton = true;
+
+                                let averageMoney = selectedData.averageMoney;
+                                let successRate = selectedData.successRate;
+                                let nerveAmount = selectedData.nerveAmount;
+
+                                moneyPerNerve = (averageMoney * successRate) / nerveAmount;
+
+                                if (moneyPerNerve === 0) {
+                                    payoutParagraph.textContent = 'Unknown';
+                                } else {
+                                    let formattedMoneyPerNerve = '$' + Math.round(moneyPerNerve).toLocaleString('en-US');
+                                    payoutParagraph.textContent = formattedMoneyPerNerve;
+                                }
+
+                                if (moneyPerNerve > bestPayoutPerNerve) {
+                                    bestPayoutPerNerve = moneyPerNerve;
+                                    highestPayoutElements = [crimeOptionElement];
+                                } else if (bestPayoutPerNerve === moneyPerNerve) {
+                                    highestPayoutElements.push(crimeOptionElement);
+                                }
+                            } else {
+                                console.log('No corresponding data found');
+                            }
+                        }
+                    });
+
+                    // If not selected, look for the best method for $ / nerve
+                    if (selectedButton == false) {
+                        let bestMoneyPerNerve = 0;
+                        let bestMethod = 'Unknown';
+                        payoutParagraph.textContent = 'Best';
+
+                        crimeData.forEach(data => {
+                            if (data.name == crimeTitle) {
+                                moneyPerNerve = (data.averageMoney * data.successRate) / data.nerveAmount;
+
+                                if (moneyPerNerve > bestMoneyPerNerve) {
+                                    bestMoneyPerNerve = moneyPerNerve;
+                                    bestMethod = data.method;
+                                }
+
+                                if (bestMoneyPerNerve === 0) {
+                                    payoutParagraph.textContent = 'Unknown';
+                                }
+
+                                if (bestMoneyPerNerve > bestPayoutPerNerve) {
+                                    bestPayoutPerNerve = moneyPerNerve;
+                                    highestPayoutElements = [crimeOptionElement];
+                                } else if (bestPayoutPerNerve === moneyPerNerve) {
+                                    highestPayoutElements.push(crimeOptionElement);
+                                }
+
+                            }
+                        });
+
+                        // Write down the best method above the money per nerve
+                        let bestMethodParagraph = document.createElement('p');
+                        bestMethodParagraph.textContent = bestMethod;
+                        bestMethodParagraph.style.paddingBottom = '4px';
+                        payoutParagraph.parentNode.insertBefore(bestMethodParagraph, payoutParagraph);
+
+                        let formattedMoneyPerNerve = '$' + Math.round(bestMoneyPerNerve).toLocaleString('en-US');
+                        payoutParagraph.textContent = formattedMoneyPerNerve;
+                    }
+                });
+
+                // Unhighlight previous crime options
+                crimeOptionElements.forEach(element => {
+                    element.style.background = '';
+                });
+
+                // Highlight the crime options with the highest payout
+                highestPayoutElements.forEach(element => {
+                    element.style.background = 'linear-gradient(180deg, rgba(108, 173, 43, 0.5), rgba(77, 124, 30, 0.5))';
+                });
+            }
+        }
+    }
+
+    function checkUrl() {
+        if (window.location.href.includes('crimes')) {
+            fetchDisposals();
+        }
+    }
+
+    setInterval(checkUrl, 200);
+
+})();
