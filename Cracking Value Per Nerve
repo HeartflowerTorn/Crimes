@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      2.0.1
+// @version      2.0.3
 // @description  Displays the value per nerve as well as highlights the one with the highest value
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -10,9 +10,6 @@
 
 (function() {
     'use strict';
-
-    let highestPayoutValue = 0;
-    let highestPayoutElements = [];
 
     let detailed = true;
 
@@ -219,14 +216,17 @@
     function fetchHighestPayout() {
         let contentWrapper = document.querySelector('.content-wrapper');
         if (contentWrapper) {
-            let rigStatusElement = document.querySelector('.rigStatus___PyA3T');
-            let bruteForceStrengthElement = rigStatusElement.querySelector('.strength___DM3lW');
-            let bruteForceStrength = bruteForceStrengthElement.querySelector('.value___FmWPr').textContent;
-
             let crimeHeader = document.querySelector('.heading___dOsMq');
             let crimeName = crimeHeader.textContent;
 
             if (crimeName == 'Cracking') {
+                let highestPayoutValue = 0;
+                let highestPayoutElements = [];
+
+                let rigStatusElement = document.querySelector('.rigStatus___PyA3T');
+                let bruteForceStrengthElement = rigStatusElement.querySelector('.strength___DM3lW');
+                let bruteForceStrength = bruteForceStrengthElement.querySelector('.value___FmWPr').textContent;
+
                 let previousPayoutDivs = document.querySelectorAll('#payoutPerNerve');
 
                 if (previousPayoutDivs) {
@@ -298,6 +298,10 @@
                             highestPayoutElements.push(crimeOptionElement);
                         }
                     }
+                });
+
+                crimeOptionElements.forEach(element => {
+                    element.style.background = '';
                 });
 
                 // Highlight the crime options with the highest payout
