@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      2.0
+// @version      2.0.1
 // @description  Displays the value per nerve as well as highlights the one with the highest value
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -46,7 +46,7 @@
             'Crime syndicate': { low: 117000, high: 342400, encryption: 3 },
             'Government': { low: 190500, high: 297500, encryption: 3 },
             'Internet service provider': { low: 199900, high: 266800, encryption: 3 },
-            'Armed forces': { low: 410600, high: 530800, encryption: 9 },
+            'Armed forces': { low: 410600, high: 750000, encryption: 9 },
             'Intelligence agency': { low: 460000, high: 880600, encryption: 9 },
         };
     } else if (detailed == true) {
@@ -212,6 +212,7 @@
             'Cloud storage bucket': {low: 15000, high: 25000, average: 20346, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
             'University network authentication': {low: 15000, high: 25000, average: 20258, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
             'Online wishlist': {low: 16700, high: 29500, average: 24859, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Enhanced interrogation archive': {low: 670900, high: 750000, average: 710450, bruteForceSuccesRate: 96, crackingSuccessRate: 100, encryption: 9},
         }
     };
 
