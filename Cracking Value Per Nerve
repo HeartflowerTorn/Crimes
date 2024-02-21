@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      2.0.3
+// @version      2.0.4
 // @description  Displays the value per nerve as well as highlights the one with the highest value
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -175,14 +175,14 @@
             'Search engine history': {low: 10000, high: 20000, average: 15127, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
             'Online RPG account': {low: 15100, high: 45300, average: 21119, bruteForceSuccessRate: 94, crackingSuccessRate: 98, encryption: 0},
             'Warrant database': {low: 150200, high: 196300, average: 178442, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
-            'DNA database': {low: 210500, high: 242200, average: 225400, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
-            'Arrest records': {low: 126400, high: 172400, average: 149943, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
-            'People of interest list': {low: 182300, high: 213800, average: 199673, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
-            'Surveillance records': {low: 130600, high: 173000, average: 152246, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
-            'Surveillance network access': {low: 201700, high: 249400, average: 226838, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
-            'Vacated properties register': {low: 153900, high: 199300, average: 172556, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
-            'Officer training records': {low: 101000, high: 149900, average: 128600, bruteForceSuccessRate: 100, crackingSuccessRate: 91, encryption: 0},
-            'Bodycam footage repository': {low: 151400, high: 185200, average: 171700, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
+            'DNA database': {low: 210500, high: 242200, average: 225400, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 3},
+            'Arrest records': {low: 126400, high: 172400, average: 149943, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
+            'People of interest list': {low: 182300, high: 213800, average: 199673, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 3},
+            'Surveillance records': {low: 130600, high: 173000, average: 152246, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
+            'Surveillance network access': {low: 201700, high: 249400, average: 226838, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 3},
+            'Vacated properties register': {low: 153900, high: 199300, average: 172556, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 3},
+            'Officer training records': {low: 101000, high: 149900, average: 128600, bruteForceSuccessRate: 100, crackingSuccessRate: 91, encryption: 3},
+            'Bodycam footage repository': {low: 151400, high: 185200, average: 171700, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 3},
             'Drug test results': {low: 70000, high: 90000, average: 79667, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 1},
             'Training records': {low: 42700, high: 67400, average: 52293, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 1},
             'Mental health records': {low: 40500, high: 59400, average: 50630, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 1},
@@ -196,13 +196,13 @@
             'Video comments log': {low: 63400, high: 117600, average: 97327, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 1},
             'Master password': {low: 72300, high: 139000, average: 116096, bruteForceSuccessRate: 95, crackingSuccessRate: 100, encryption: 1},
             'Patent filing catalog': {low: 105300, high: 149500, average: 123923, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 2},
-            'Digital storage platform': {low: 80000, high: 119400, average: 97521, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 0},
-            'API gateway': {low: 101400, high: 129200, average: 119467, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
-            'Sales ledger': {low: 120300, high: 157600, average: 142995, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 0},
-            'Business communications platform': {low: 111800, high: 128800, average: 120717, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
-            'Research & development databank': {low: 92500, high: 120000, average: 103678, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
-            'Corporate bank account': {low: 160500, high: 238600, average: 198618, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
-            'Client directory': {low: 148900, high: 166500, average: 159743, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
+            'Digital storage platform': {low: 80000, high: 119400, average: 97521, bruteForceSuccessRate: 93, crackingSuccessRate: 100, encryption: 2},
+            'API gateway': {low: 101400, high: 129200, average: 119467, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 2},
+            'Sales ledger': {low: 120300, high: 157600, average: 142995, bruteForceSuccessRate: 94, crackingSuccessRate: 100, encryption: 2},
+            'Business communications platform': {low: 111800, high: 128800, average: 120717, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 2},
+            'Research & development databank': {low: 92500, high: 120000, average: 103678, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 2},
+            'Corporate bank account': {low: 160500, high: 238600, average: 198618, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 2},
+            'Client directory': {low: 148900, high: 166500, average: 159743, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 2},
             'Social media account': {low: 17500, high: 30000, average: 24822, bruteForceSuccessRate: 99, crackingSuccessRate: 100, encryption: 0},
             'Cellphone provider': {low: 10000, high: 19800, average: 15117, bruteForceSuccessRate: 96, crackingSuccessRate: 99, encryption: 0},
             'Calendar app': {low: 10100, high: 20000, average: 15012, bruteForceSuccessRate: 97, crackingSuccessRate: 100, encryption: 0},
