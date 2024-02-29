@@ -210,6 +210,7 @@
             'University network authentication': {low: 15000, high: 25000, average: 20258, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
             'Online wishlist': {low: 16700, high: 29500, average: 24859, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
             'Enhanced interrogation archive': {low: 670900, high: 750000, average: 710450, bruteForceSuccesRate: 96, crackingSuccessRate: 100, encryption: 9},
+            'Government email account': {low: 83700, high: 94600, average: 89150, bruteForceSuccesRate: 100, crackingSuccessRate: 100, encryption: 1},
         }
     };
 
