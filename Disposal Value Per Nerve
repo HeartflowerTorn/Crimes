@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Disposal Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      1.0
+// @version      1.1
 // @description  Displays the value per nerve for each disposal as well as highlights the best one.
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -13,25 +13,25 @@
 
     let crimeData = [
         { name: 'Biological Waste', method: 'Abandon', averageMoney: 28012, successRate: 0.74, nerveAmount: 6 },
-        { name: 'Biological Waste', method: 'Bury', averageMoney: 28201, successRate: 0.8, nerveAmount: 8 },
+        { name: 'Biological Waste', method: 'Bury', averageMoney: 28201, successRate: 0.83, nerveAmount: 8 },
         { name: 'Biological Waste', method: 'Burn', averageMoney: 29061, successRate: 0.68, nerveAmount: 10 },
-        { name: 'Biological Waste', method: 'Sink', averageMoney: 28477, successRate: 0.98, nerveAmount: 12 },
+        { name: 'Biological Waste', method: 'Sink', averageMoney: 28477, successRate: 0.99, nerveAmount: 12 },
 
-        { name: 'Body Part', method: 'Abandon', averageMoney: 72044, successRate: 0.74, nerveAmount: 6 },
-        { name: 'Body Part', method: 'Bury', averageMoney: 71673, successRate: 0.76, nerveAmount: 8 },
-        { name: 'Body Part', method: 'Burn', averageMoney: 70850, successRate: 0.91, nerveAmount: 10 },
-        { name: 'Body Part', method: 'Sink', averageMoney: 70913, successRate: 0.91, nerveAmount: 12 },
+        { name: 'Body Part', method: 'Abandon', averageMoney: 72044, successRate: 0.60, nerveAmount: 6 },
+        { name: 'Body Part', method: 'Bury', averageMoney: 71673, successRate: 0.83, nerveAmount: 8 },
+        { name: 'Body Part', method: 'Burn', averageMoney: 70850, successRate: 0.89, nerveAmount: 10 },
+        { name: 'Body Part', method: 'Sink', averageMoney: 70913, successRate: 0.89, nerveAmount: 12 },
         { name: 'Body Part', method: 'Dissolve', averageMoney: 70543, successRate: 0.98, nerveAmount: 14 },
 
-        { name: 'Building Debris', method: 'Abandon', averageMoney: 8923, successRate: 0.84, nerveAmount: 6 },
-        { name: 'Building Debris', method: 'Bury', averageMoney: 8860, successRate: 0.7, nerveAmount: 8 },
+        { name: 'Building Debris', method: 'Abandon', averageMoney: 8923, successRate: 0.83, nerveAmount: 6 },
+        { name: 'Building Debris', method: 'Bury', averageMoney: 8860, successRate: 0.70, nerveAmount: 8 },
         { name: 'Building Debris', method: 'Sink', averageMoney: 8990, successRate: 0.97, nerveAmount: 12 },
 
         { name: 'Dead Body', method: 'Abandon', averageMoney: 140755, successRate: 0.81, nerveAmount: 6 },
-        { name: 'Dead Body', method: 'Bury', averageMoney: 130663, successRate: 1, nerveAmount: 8 },
-        { name: 'Dead Body', method: 'Burn', averageMoney: 150350, successRate: 0.5, nerveAmount: 10 },
-        { name: 'Dead Body', method: 'Sink', averageMoney: 0, successRate: 0, nerveAmount: 12 },
-        { name: 'Dead Body', method: 'Dissolve', averageMoney: 137550, successRate: 1, nerveAmount: 14 },
+        { name: 'Dead Body', method: 'Bury', averageMoney: 130663, successRate: 0.92, nerveAmount: 8 },
+        { name: 'Dead Body', method: 'Burn', averageMoney: 150350, successRate: 0.50, nerveAmount: 10 },
+        { name: 'Dead Body', method: 'Sink', averageMoney: 0, successRate: 0.50, nerveAmount: 12 },
+        { name: 'Dead Body', method: 'Dissolve', averageMoney: 137550, successRate: 1.00, nerveAmount: 14 },
 
         { name: 'Documents', method: 'Abandon', averageMoney: 10118, successRate: 0.67, nerveAmount: 6 },
         { name: 'Documents', method: 'Bury', averageMoney: 9957, successRate: 0.82, nerveAmount: 8 },
@@ -39,7 +39,7 @@
         { name: 'Documents', method: 'Sink', averageMoney: 0, successRate: 0, nerveAmount: 12 },
         { name: 'Documents', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
 
-        { name: 'Firearm', method: 'Abandon', averageMoney: 38433, successRate: 0.72, nerveAmount: 6 },
+        { name: 'Firearm', method: 'Abandon', averageMoney: 38433, successRate: 0.76, nerveAmount: 6 },
         { name: 'Firearm', method: 'Bury', averageMoney: 37241, successRate: 0.86, nerveAmount: 8 },
         { name: 'Firearm', method: 'Sink', averageMoney: 38222, successRate: 0.98, nerveAmount: 12 },
         { name: 'Firearm', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
@@ -47,30 +47,30 @@
         { name: 'General Waste', method: 'Abandon', averageMoney: 2017, successRate: 0.83, nerveAmount: 6 },
         { name: 'General Waste', method: 'Bury', averageMoney: 2066, successRate: 0.97, nerveAmount: 8 },
         { name: 'General Waste', method: 'Burn', averageMoney: 1994, successRate: 0.96, nerveAmount: 10 },
-        { name: 'General Waste', method: 'Sink', averageMoney: 2000, successRate: 0.71, nerveAmount: 12 },
-        { name: 'General Waste', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
+        { name: 'General Waste', method: 'Sink', averageMoney: 1998, successRate: 0.71, nerveAmount: 12 },
+        { name: 'General Waste', method: 'Dissolve', averageMoney: 2000, successRate: 0, nerveAmount: 14 },
 
-        { name: 'Industrial Waste', method: 'Abandon', averageMoney: 24077, successRate: 0.72, nerveAmount: 6 },
+        { name: 'Industrial Waste', method: 'Abandon', averageMoney: 24077, successRate: 0.74, nerveAmount: 6 },
         { name: 'Industrial Waste', method: 'Bury', averageMoney: 24375, successRate: 0.83, nerveAmount: 8 },
         { name: 'Industrial Waste', method: 'Sink', averageMoney: 24067, successRate: 0.97, nerveAmount: 12 },
 
-        { name: 'Murder Weapon', method: 'Abandon', averageMoney: 19078, successRate: 0.75, nerveAmount: 6 },
-        { name: 'Murder Weapon', method: 'Bury', averageMoney: 38912, successRate: 0.86, nerveAmount: 8 },
+        { name: 'Murder Weapon', method: 'Abandon', averageMoney: 39078, successRate: 0.65, nerveAmount: 6 },
+        { name: 'Murder Weapon', method: 'Bury', averageMoney: 38912, successRate: 0.87, nerveAmount: 8 },
         { name: 'Murder Weapon', method: 'Sink', averageMoney: 37359, successRate: 0.98, nerveAmount: 12 },
         { name: 'Murder Weapon', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
 
-        { name: 'Old Furniture', method: 'Abandon', averageMoney: 2976, successRate: 0.83, nerveAmount: 6 },
-        { name: 'Old Furniture', method: 'Bury', averageMoney: 2961, successRate: 0.68, nerveAmount: 8 },
+        { name: 'Old Furniture', method: 'Abandon', averageMoney: 2885, successRate: 0.83, nerveAmount: 6 },
+        { name: 'Old Furniture', method: 'Bury', averageMoney: 2961, successRate: 0.67, nerveAmount: 8 },
         { name: 'Old Furniture', method: 'Burn', averageMoney: 2993, successRate: 0.97, nerveAmount: 10 },
         { name: 'Old Furniture', method: 'Sink', averageMoney: 2970, successRate: 0.85, nerveAmount: 12 },
         { name: 'Old Furniture', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
 
-        { name: 'Broken Appliance', method: 'Abandon', averageMoney: 4535, successRate: 0.93, nerveAmount: 6 },
-        { name: 'Broken Appliance', method: 'Bury', averageMoney: 4557, successRate: 0.81, nerveAmount: 8 },
+        { name: 'Broken Appliance', method: 'Abandon', averageMoney: 4535, successRate: 0.81, nerveAmount: 6 },
+        { name: 'Broken Appliance', method: 'Bury', averageMoney: 4557, successRate: 0.73, nerveAmount: 8 },
         { name: 'Broken Appliance', method: 'Sink', averageMoney: 4469, successRate: 0.97, nerveAmount: 12 },
         { name: 'Broken Appliance', method: 'Dissolve', averageMoney: 0, successRate: 0, nerveAmount: 14 },
 
-        { name: 'Vehicle', method: 'Abandon', averageMoney: 15070, successRate: 0.82, nerveAmount: 6 },
+        { name: 'Vehicle', method: 'Abandon', averageMoney: 15070, successRate: 0.83, nerveAmount: 6 },
         { name: 'Vehicle', method: 'Burn', averageMoney: 14994, successRate: 0.96, nerveAmount: 10 },
         { name: 'Vehicle', method: 'Sink', averageMoney: 15017, successRate: 0.98, nerveAmount: 12 },
     ];
@@ -89,7 +89,7 @@
             if (crimeName == 'Disposal') {
                 let crimeOptionElements = document.querySelectorAll('.crime-option');
 
-                let existingPayoutElements = document.querySelectorAll('#hf-disposal-payout');
+                let existingPayoutElements = document.querySelectorAll('.hf-disposal-payout');
 
                 // If there's already payout divs, remove them first
                 if (existingPayoutElements) {
@@ -109,7 +109,7 @@
 
                     // Create the payout div
                     let payoutElement = document.createElement('div');
-                    payoutElement.id = 'hf-disposal-payout';
+                    payoutElement.className = 'hf-disposal-payout';
                     payoutElement.style.display = 'flex';
                     payoutElement.style.flex = '1';
                     payoutElement.style.flexDirection = 'column';
@@ -119,7 +119,7 @@
 
                     // Create the paragraph for the amount
                     let payoutParagraph = document.createElement('p');
-                    payoutParagraph.id = 'hf-disposal-payout-amount';
+                    payoutParagraph.className = 'hf-disposal-payout-amount';
                     payoutParagraph.textContent = 'Unknown';
                     payoutElement.appendChild(payoutParagraph);
 
@@ -210,8 +210,60 @@
                 highestPayoutElements.forEach(element => {
                     element.style.background = 'linear-gradient(180deg, rgba(108, 173, 43, 0.5), rgba(77, 124, 30, 0.5))';
                 });
+
+                sortButton();
             }
         }
+    }
+
+    function sortButton() {
+        let currentCrime = document.body.querySelector('.currentCrime___MN0T1');
+        let titleBar = currentCrime.querySelector('.titleBar___Cci85');
+
+        let existingDiv = document.body.querySelector('.sort-button-div');
+
+        if (existingDiv) {
+            return;
+        }
+
+        let div = document.createElement('div');
+        div.className = 'sort-button-div';
+        div.style.display = 'flex';
+        div.style.flex = '2';
+        div.style.marginLeft = '8px';
+
+        let button = document.createElement('button');
+        button.textContent = 'SORT BY VALUE';
+        button.style.background = 'linear-gradient(180deg, #008dc3c7, #001f4bad)';
+        button.style.color = '#ddd';
+        button.style.borderRadius = '10px';
+        button.style.borderStyle = 'none';
+        button.style.padding = '4px 8px';
+        button.style.fontSize = '12px';
+        button.style.fontWeight = 'bold';
+        button.style.cursor = 'pointer';
+
+        div.appendChild(button);
+
+        titleBar.insertBefore(div, titleBar.lastElementChild);
+
+        button.onclick = function() {
+            let container = document.querySelector('.crimeOptionGroup___gQ6rI');
+            let crimeOptionElements = document.querySelectorAll('.crime-option');
+            let crimeOptionArray = Array.from(crimeOptionElements);
+
+            // Sort the crime options
+            let sortedCrimeOptions = crimeOptionArray.sort((a, b) => {
+                let payoutA = parseInt(a.querySelector('.hf-disposal-payout-amount').textContent.replace('$', '').replace(',', '').trim()) || 0;
+                let payoutB = parseInt(b.querySelector('.hf-disposal-payout-amount').textContent.replace('$', '').replace(',', '').trim()) || 0;
+                return payoutB - payoutA;
+            });
+
+            // Append the sorted crime options
+            sortedCrimeOptions.forEach(option => {
+                container.appendChild(option)
+            });
+        };
     }
 
     function checkUrl() {
