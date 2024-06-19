@@ -277,6 +277,7 @@
             'Work email account': {low: 20000, high: 29900, average: 25164, bruteForceSuccessRate: 98, crackingSuccessRate: 100, encryption: 0},
             'Work email account': {low: 15000, high: 29400, average: 19904, bruteForceSuccessRate: 97, crackingSuccessRate: 99, encryption: 0},
             'Remote PC access': {low: 20600, high: 48000, average: 25097, bruteForceSuccessRate: 96, crackingSuccessRate: 100, encryption: 0},
+            'National archive': {low: 216900, high: 216900, average: 216900, bruteForceSuccessRate: 100, crackingSuccessRate: 100, encryption: 0},
         }
     };
 
