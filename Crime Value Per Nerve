@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Crime Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      1.1
+// @version      1.1.1
 // @description  Displays the value per nerve for Disposal and Cracking
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -580,7 +580,7 @@
     }
 
     function checkUrl() {
-        if (window.location.href.includes('crimes')) {
+        if (window.location.href.includes('sid=crimes')) {
             fetchCrimeName();
         }
     }
