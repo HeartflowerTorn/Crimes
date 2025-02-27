@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cracking Value Per Nerve
 // @namespace    heartflower.torn.com
-// @version      2.1
+// @version      2.1.1
 // @description  Displays the value per nerve as well as highlights the one with the highest value
 // @author       Heartflower [2626587]
 // @match        https://www.torn.com/*
@@ -370,7 +370,7 @@
     }
 
     function checkUrl() {
-        if (window.location.href.includes('crimes')) {
+        if (window.location.href.includes('sid=crimes')) {
             fetchHighestPayout();
         }
     }
